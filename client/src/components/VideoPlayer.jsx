@@ -1,10 +1,22 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import YouTube from 'react-youtube';
 
 export default function VideoPlayer({ video, otherVideos, onBack, onSwitchVideo, isKidMode }) {
   const [hideControls, setHideControls] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
   const playerRef = useRef(null);
+  const overlayTimer = useRef(null);
+
+  useEffect(() => {
+    if (isPaused) {
+      clearTimeout(overlayTimer.current);
+      setShowOverlay(true);
+    } else {
+      overlayTimer.current = setTimeout(() => setShowOverlay(false), 500);
+    }
+    return () => clearTimeout(overlayTimer.current);
+  }, [isPaused]);
 
   const togglePlayPause = () => {
     const player = playerRef.current;
@@ -52,10 +64,10 @@ export default function VideoPlayer({ video, otherVideos, onBack, onSwitchVideo,
         {isKidMode && (
           <>
             <div
-              className={`kid-overlay-top ${isPaused ? 'paused' : ''}`}
+              className={`kid-overlay-top ${showOverlay ? 'paused' : ''}`}
               onClick={togglePlayPause}
             >
-              {isPaused && (
+              {showOverlay && (
                 <>
                   <div className="pause-play-btn" />
                   {otherVideos.length > 0 && (
