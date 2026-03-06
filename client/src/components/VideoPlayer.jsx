@@ -55,21 +55,25 @@ export default function VideoPlayer({ video, otherVideos, onBack, onSwitchVideo,
               className={`kid-overlay-top ${isPaused ? 'paused' : ''}`}
               onClick={togglePlayPause}
             >
-              {isPaused && <div className="pause-play-btn" />}
+              {isPaused && (
+                <>
+                  <div className="pause-play-btn" />
+                  {otherVideos.length > 0 && (
+                    <div className="kid-video-bar">
+                      {otherVideos.slice(0, 8).map(v => (
+                        <div
+                          key={v.id}
+                          className="kid-video-bar-thumb"
+                          onClick={(e) => { e.stopPropagation(); onSwitchVideo(v); }}
+                        >
+                          <img src={v.thumbnail_url} alt={v.title} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-            {otherVideos.length > 0 && (
-              <div className="kid-video-bar">
-                {otherVideos.slice(0, 8).map(v => (
-                  <div
-                    key={v.id}
-                    className="kid-video-bar-thumb"
-                    onClick={() => onSwitchVideo(v)}
-                  >
-                    <img src={v.thumbnail_url} alt={v.title} />
-                  </div>
-                ))}
-              </div>
-            )}
             <div className="kid-overlay-controls-block" />
           </>
         )}

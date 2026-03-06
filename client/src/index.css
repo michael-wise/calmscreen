@@ -432,7 +432,7 @@ body {
 
 /* Kid mode: layered overlays.
    - Top overlay blocks video area (watermark, suggestions)
-   - Persistent bottom bar shows OUR curated videos (covers YT suggestions)
+   - When paused: shows play button + curated video bar
    - Bottom-right overlay blocks YT logo, cast, settings
    - Bottom-left gap exposes play/pause, volume */
 .kid-overlay-top {
@@ -440,13 +440,15 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 168px;
+  bottom: 48px;
   z-index: 105;
   cursor: pointer;
   transition: background 0.3s ease;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 24px;
 }
 
 .kid-overlay-top.paused {
@@ -477,21 +479,16 @@ body {
   transform: translate(-40%, -50%);
 }
 
-/* Persistent bottom bar with our curated videos */
+/* Curated video bar shown on pause */
 .kid-video-bar {
-  position: absolute;
-  bottom: 48px;
-  left: 0;
-  right: 0;
-  height: 120px;
-  z-index: 106;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.8));
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 0 16px;
   overflow-x: auto;
   scrollbar-width: none;
+  max-width: 100%;
+  animation: fadeIn 0.3s ease;
 }
 
 .kid-video-bar::-webkit-scrollbar {
