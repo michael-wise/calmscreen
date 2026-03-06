@@ -3,7 +3,15 @@ import YouTube from 'react-youtube';
 
 export default function VideoPlayer({ video, onBack, isKidMode }) {
   const [hideControls, setHideControls] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const playerRef = useRef(null);
+
+  const togglePlayPause = () => {
+    const player = playerRef.current;
+    if (!player) return;
+    if (isPaused) player.playVideo();
+    else player.pauseVideo();
+  };
 
   const opts = {
     width: '100%',
@@ -36,13 +44,14 @@ export default function VideoPlayer({ video, onBack, isKidMode }) {
           videoId={video.youtube_id}
           opts={opts}
           onEnd={onBack}
+          onStateChange={(e) => setIsPaused(e.data === 2)}
           onReady={(e) => { playerRef.current = e.target; }}
           style={{ width: '100%', height: '100%' }}
           iframeClassName="youtube-iframe"
         />
         {isKidMode && (
           <>
-            <div className="kid-overlay-main" />
+            <div className="kid-overlay-main" onClick={togglePlayPause} />
             <div className="kid-overlay-controls-block" />
           </>
         )}
