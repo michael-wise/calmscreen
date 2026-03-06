@@ -499,7 +499,7 @@ body {
 
 .kid-video-bar-thumb {
   flex-shrink: 0;
-  width: 175px;
+  width: 210px;
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -539,7 +539,7 @@ body {
     padding: 0 12px;
   }
   .kid-video-bar-thumb {
-    width: 150px;
+    width: 180px;
   }
 }
 
