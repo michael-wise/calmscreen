@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import YouTube from 'react-youtube';
 
-export default function VideoPlayer({ video, onBack, isKidMode }) {
+export default function VideoPlayer({ video, otherVideos, onBack, onSwitchVideo, isKidMode }) {
   const [hideControls, setHideControls] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const playerRef = useRef(null);
@@ -51,7 +51,29 @@ export default function VideoPlayer({ video, onBack, isKidMode }) {
         />
         {isKidMode && (
           <>
-            <div className="kid-overlay-main" onClick={togglePlayPause} />
+            <div
+              className={`kid-overlay-main ${isPaused ? 'paused' : ''}`}
+              onClick={togglePlayPause}
+            >
+              {isPaused && (
+                <div className="pause-screen">
+                  <div className="pause-play-btn" />
+                  {otherVideos.length > 0 && (
+                    <div className="pause-suggestions">
+                      {otherVideos.slice(0, 6).map(v => (
+                        <div
+                          key={v.id}
+                          className="pause-thumb"
+                          onClick={(e) => { e.stopPropagation(); onSwitchVideo(v); }}
+                        >
+                          <img src={v.thumbnail_url} alt={v.title} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
             <div className="kid-overlay-controls-block" />
           </>
         )}

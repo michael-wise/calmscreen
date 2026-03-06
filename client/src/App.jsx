@@ -53,7 +53,9 @@ export default function App() {
     return (
       <VideoPlayer
         video={currentVideo}
+        otherVideos={videos.filter(v => v.id !== currentVideo.id)}
         onBack={() => setCurrentVideo(null)}
+        onSwitchVideo={setCurrentVideo}
         isKidMode={!isParentMode}
       />
     );

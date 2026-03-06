@@ -432,6 +432,7 @@ body {
 
 /* Kid mode: targeted overlays.
    - Main overlay blocks video area (watermark, suggestions, end screen)
+   - When paused: opaque overlay with our own video suggestions
    - Bottom-right overlay blocks YT logo, cast, settings
    - Bottom-left gap exposes play/pause, volume, progress */
 .kid-overlay-main {
@@ -441,6 +442,12 @@ body {
   right: 0;
   bottom: 48px;
   z-index: 105;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.kid-overlay-main.paused {
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .kid-overlay-controls-block {
@@ -450,6 +457,91 @@ body {
   width: 40%;
   height: 48px;
   z-index: 105;
+}
+
+/* Pause screen with our own suggestions */
+.pause-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+.pause-play-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.pause-play-btn::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 16px 0 16px 28px;
+  border-color: transparent transparent transparent #22C55E;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-40%, -50%);
+}
+
+.pause-suggestions {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pause-thumb {
+  width: 140px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pause-thumb:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.pause-thumb:active {
+  transform: scale(0.97);
+}
+
+.pause-thumb img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .pause-thumb {
+    width: 120px;
+  }
+  .pause-suggestions {
+    gap: 8px;
+  }
 }
 
 /* ---- Modal ---- */
