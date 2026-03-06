@@ -486,7 +486,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 16px;
+  padding: 16px 16px;
   overflow-x: auto;
   scrollbar-width: none;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
@@ -534,7 +534,7 @@ body {
 
 @media (max-width: 640px) {
   .kid-video-bar {
-    height: 100px;
+    height: 130px;
     gap: 8px;
     padding: 0 12px;
   }
