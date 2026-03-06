@@ -489,7 +489,7 @@ body {
   padding: 16px 16px;
   overflow-x: auto;
   scrollbar-width: none;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  background: #111;
   animation: fadeIn 0.3s ease;
 }
 
@@ -499,7 +499,7 @@ body {
 
 .kid-video-bar-thumb {
   flex-shrink: 0;
-  width: 210px;
+  width: 252px;
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -539,7 +539,7 @@ body {
     padding: 0 12px;
   }
   .kid-video-bar-thumb {
-    width: 180px;
+    width: 216px;
   }
 }
 
