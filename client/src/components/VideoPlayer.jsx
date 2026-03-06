@@ -3,7 +3,6 @@ import YouTube from 'react-youtube';
 
 export default function VideoPlayer({ video, onBack, isKidMode }) {
   const [hideControls, setHideControls] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
   const playerRef = useRef(null);
 
   const opts = {
@@ -15,22 +14,9 @@ export default function VideoPlayer({ video, onBack, isKidMode }) {
       modestbranding: 1,
       iv_load_policy: 3,
       playsinline: 1,
-      ...(isKidMode && {
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-      }),
+      disablekb: isKidMode ? 1 : 0,
+      fs: isKidMode ? 0 : 1,
     },
-  };
-
-  const handleOverlayClick = () => {
-    const player = playerRef.current;
-    if (!player) return;
-    if (isPaused) {
-      player.playVideo();
-    } else {
-      player.pauseVideo();
-    }
   };
 
   return (
@@ -50,19 +36,15 @@ export default function VideoPlayer({ video, onBack, isKidMode }) {
           videoId={video.youtube_id}
           opts={opts}
           onEnd={onBack}
-          onStateChange={(e) => setIsPaused(e.data === 2)}
           onReady={(e) => { playerRef.current = e.target; }}
           style={{ width: '100%', height: '100%' }}
           iframeClassName="youtube-iframe"
         />
         {isKidMode && (
-          <div className="kid-fullblock" onClick={handleOverlayClick}>
-            {isPaused && (
-              <div className="kid-play-hint">
-                <div className="kid-play-icon" />
-              </div>
-            )}
-          </div>
+          <>
+            <div className="kid-overlay-main" />
+            <div className="kid-overlay-controls-block" />
+          </>
         )}
       </div>
     </div>

@@ -430,37 +430,26 @@ body {
   height: 100%;
 }
 
-/* Kid mode: full overlay blocks all YouTube interaction.
-   Tap toggles play/pause via API. onEnd returns to grid. */
-.kid-fullblock {
+/* Kid mode: targeted overlays.
+   - Main overlay blocks video area (watermark, suggestions, end screen)
+   - Bottom-right overlay blocks YT logo, cast, settings
+   - Bottom-left gap exposes play/pause, volume, progress */
+.kid-overlay-main {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 48px;
   z-index: 105;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.kid-play-hint {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.2s ease;
-}
-
-.kid-play-icon {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 16px 0 16px 28px;
-  border-color: transparent transparent transparent #22C55E;
-  margin-left: 5px;
+.kid-overlay-controls-block {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40%;
+  height: 48px;
+  z-index: 105;
 }
 
 /* ---- Modal ---- */
